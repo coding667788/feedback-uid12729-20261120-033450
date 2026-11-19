@@ -1,0 +1,1867 @@
+{
+  "cases": [
+    {
+      "name": "basic-merge-login",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "provider": "provC",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1",
+                "c1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r6",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r6",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "principal": {
+            "principal_no": "a1",
+            "generation": 2,
+            "members": [
+              "a1",
+              "b1",
+              "c1"
+            ],
+            "gen_map": {
+              "a1": 1,
+              "b1": 1,
+              "c1": 1
+            }
+          },
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "provider-conflict-rejected",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "a2",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "status": "rejected",
+          "error": {
+            "code": "E_PROVIDER_CONFLICT",
+            "message": "合并后分量将同时包含提供方 provA 的身份 a1 与 a2"
+          },
+          "invalidated_sessions": [],
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "identity": "a2",
+          "principal": null,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "principal": {
+            "principal_no": "a1",
+            "generation": 1,
+            "members": [
+              "a1",
+              "b1"
+            ],
+            "gen_map": {
+              "a1": 1,
+              "b1": 1
+            }
+          },
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "bridge-revoke-with-alternate-path",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "provider": "provC",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "d1",
+          "provider": "provD",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1",
+                "c1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "edge_id": "e3",
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "members": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 3,
+              "members": [
+                "a1",
+                "b1",
+                "c1",
+                "d1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "edge_id": "e4",
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "members": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "changes": [],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r9",
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "members": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "resulting_principals": [
+            {
+              "principal_no": "a1",
+              "generation": 3,
+              "members": [
+                "a1",
+                "b1",
+                "c1",
+                "d1"
+              ]
+            }
+          ],
+          "changes": [],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r10",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 7,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r9",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r11",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 8,
+          "replayed": false
+        },
+        {
+          "edge_id": "e3",
+          "resulting_principals": [
+            {
+              "principal_no": "a1",
+              "generation": 4,
+              "members": [
+                "a1",
+                "b1",
+                "d1"
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 4,
+              "members": [
+                "a1",
+                "b1",
+                "d1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [
+            "S-r9"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r12",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 9,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r9",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r13",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 10,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "principal": null,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r14",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 10,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "bridge-revoke-splits",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "provider": "provC",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1",
+                "c1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r6",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "resulting_principals": [
+            {
+              "principal_no": "a1",
+              "generation": 3,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 3,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [
+            "S-r6"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r6",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "principal": {
+            "principal_no": "a1",
+            "generation": 3,
+            "members": [
+              "a1",
+              "b1"
+            ],
+            "gen_map": {
+              "a1": 1,
+              "b1": 1
+            }
+          },
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "expiry-vs-new-session",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 9,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [
+            "S-r4"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 10,
+          "replayed": false
+        },
+        {
+          "status": "rejected",
+          "error": {
+            "code": "E_SESSION_MISMATCH",
+            "message": "身份集合 ['a1', 'b1'] 不是任何当前主体的确切成员集"
+          },
+          "invalidated_sessions": [],
+          "request_id": "r6",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 10,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 11,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 12,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r9",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 12,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r9",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r10",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 13,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "renewals-and-replay",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "identity_generation": 2,
+          "principal": {
+            "principal_no": "a1",
+            "generation": 2,
+            "members": [
+              "a1",
+              "b1"
+            ],
+            "gen_map": {
+              "a1": 2,
+              "b1": 1
+            }
+          },
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [
+            "S-r4"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "renew_identity",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "valid_until": 50,
+          "changes": [],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "renew_edge",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "changes": [],
+          "clock": 5,
+          "edge_id": "e1",
+          "error": null,
+          "invalidated_sessions": [],
+          "op": "renew_edge",
+          "replayed": true,
+          "request_id": "r7",
+          "status": "ok",
+          "tenant": "t1",
+          "valid_until": 50
+        },
+        {
+          "session_id": "S-r8",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 8,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "duplicate-request-replay",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "resulting_principals": [],
+          "changes": [],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "changes": [
+            {
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ],
+              "principal_no": "a1"
+            }
+          ],
+          "clock": 2,
+          "edge_id": "e1",
+          "error": null,
+          "invalidated_sessions": [],
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "op": "associate",
+          "principal_generation": 1,
+          "principal_no": "a1",
+          "replayed": true,
+          "request_id": "r3",
+          "status": "ok",
+          "tenant": "t1"
+        },
+        {
+          "identity": "a1",
+          "principal": null,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "principal": {
+            "principal_no": "a1",
+            "generation": 2,
+            "members": [
+              "a1",
+              "b1"
+            ],
+            "gen_map": {
+              "a1": 1,
+              "b1": 1
+            }
+          },
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "get_principal",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "tenant-isolation",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t2",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "create_identity",
+          "tenant": "t2",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "associate",
+          "tenant": "t2",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r7",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "login",
+          "tenant": "t2",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "resulting_principals": [],
+          "changes": [],
+          "invalidated_sessions": [
+            "S-r7"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r7",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r10",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r11",
+          "op": "check_session",
+          "tenant": "t2",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "identity": "a1",
+          "principal": {
+            "principal_no": "a1",
+            "generation": 1,
+            "members": [
+              "a1",
+              "b1"
+            ],
+            "gen_map": {
+              "a1": 1,
+              "b1": 1
+            }
+          },
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r12",
+          "op": "get_principal",
+          "tenant": "t2",
+          "clock": 5,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "old-generation-never-revives",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "resulting_principals": [],
+          "changes": [],
+          "invalidated_sessions": [
+            "S-r4"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "revoke",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 2,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r4",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "valid": true,
+          "principal_no": "a1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 7,
+          "replayed": false
+        }
+      ]
+    },
+    {
+      "name": "merge-two-components",
+      "results": [
+        {
+          "identity": "a1",
+          "provider": "provA",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r1",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "b1",
+          "provider": "provB",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r2",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "c1",
+          "provider": "provC",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r3",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "identity": "d1",
+          "provider": "provD",
+          "identity_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r4",
+          "op": "create_identity",
+          "tenant": "t1",
+          "clock": 1,
+          "replayed": false
+        },
+        {
+          "edge_id": "e1",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 1,
+              "members": [
+                "a1",
+                "b1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r5",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 2,
+          "replayed": false
+        },
+        {
+          "edge_id": "e2",
+          "principal_no": "c1",
+          "principal_generation": 2,
+          "members": [
+            "c1",
+            "d1"
+          ],
+          "changes": [
+            {
+              "principal_no": "c1",
+              "generation": 2,
+              "members": [
+                "c1",
+                "d1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r6",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 3,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r7",
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "members": [
+            "a1",
+            "b1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r7",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "principal_no": "c1",
+          "principal_generation": 2,
+          "members": [
+            "c1",
+            "d1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r8",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 4,
+          "replayed": false
+        },
+        {
+          "edge_id": "e3",
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "members": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "changes": [
+            {
+              "principal_no": "a1",
+              "generation": 3,
+              "members": [
+                "a1",
+                "b1",
+                "c1",
+                "d1"
+              ]
+            }
+          ],
+          "invalidated_sessions": [
+            "S-r7",
+            "S-r8"
+          ],
+          "status": "ok",
+          "error": null,
+          "request_id": "r9",
+          "op": "associate",
+          "tenant": "t1",
+          "clock": 5,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r7",
+          "valid": false,
+          "principal_no": "a1",
+          "principal_generation": 1,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r10",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r8",
+          "valid": false,
+          "principal_no": "c1",
+          "principal_generation": 2,
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r11",
+          "op": "check_session",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        },
+        {
+          "session_id": "S-r12",
+          "principal_no": "a1",
+          "principal_generation": 3,
+          "members": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "invalidated_sessions": [],
+          "status": "ok",
+          "error": null,
+          "request_id": "r12",
+          "op": "login",
+          "tenant": "t1",
+          "clock": 6,
+          "replayed": false
+        }
+      ]
+    }
+  ]
+}

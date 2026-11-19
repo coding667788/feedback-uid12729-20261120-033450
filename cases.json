@@ -1,0 +1,1023 @@
+{
+  "cases": [
+    {
+      "name": "basic-merge-login",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t1",
+          "identity": "c1",
+          "provider": "provC",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r4",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "b1",
+          "b": "c1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provB|b1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provC|c1|1|100",
+          "valid_from": 2,
+          "valid_until": 100,
+          "clock": 3
+        },
+        {
+          "op": "login",
+          "request_id": "r6",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "clock": 4
+        },
+        {
+          "op": "check_session",
+          "request_id": "r7",
+          "tenant": "t1",
+          "session_id": "S-r6",
+          "clock": 5
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r8",
+          "tenant": "t1",
+          "identity": "c1",
+          "clock": 5
+        }
+      ]
+    },
+    {
+      "name": "provider-conflict-rejected",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t1",
+          "identity": "a2",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r4",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "b1",
+          "b": "a2",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provB|b1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provA|a2|1|100",
+          "valid_from": 2,
+          "valid_until": 100,
+          "clock": 3
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r6",
+          "tenant": "t1",
+          "identity": "a2",
+          "clock": 4
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r7",
+          "tenant": "t1",
+          "identity": "a1",
+          "clock": 4
+        }
+      ]
+    },
+    {
+      "name": "bridge-revoke-with-alternate-path",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t1",
+          "identity": "c1",
+          "provider": "provC",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r4",
+          "tenant": "t1",
+          "identity": "d1",
+          "provider": "provD",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r6",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "b1",
+          "b": "c1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provB|b1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provC|c1|1|100",
+          "valid_from": 2,
+          "valid_until": 100,
+          "clock": 3
+        },
+        {
+          "op": "associate",
+          "request_id": "r7",
+          "tenant": "t1",
+          "edge_id": "e3",
+          "a": "c1",
+          "b": "d1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e3|provC|c1|1|100",
+          "confirm_b": "MOCKCONF|t1|e3|provD|d1|1|100",
+          "valid_from": 3,
+          "valid_until": 100,
+          "clock": 4
+        },
+        {
+          "op": "associate",
+          "request_id": "r8",
+          "tenant": "t1",
+          "edge_id": "e4",
+          "a": "d1",
+          "b": "a1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e4|provD|d1|1|100",
+          "confirm_b": "MOCKCONF|t1|e4|provA|a1|1|100",
+          "valid_from": 4,
+          "valid_until": 100,
+          "clock": 5
+        },
+        {
+          "op": "login",
+          "request_id": "r9",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "clock": 6
+        },
+        {
+          "op": "revoke",
+          "request_id": "r10",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "clock": 7
+        },
+        {
+          "op": "check_session",
+          "request_id": "r11",
+          "tenant": "t1",
+          "session_id": "S-r9",
+          "clock": 8
+        },
+        {
+          "op": "revoke",
+          "request_id": "r12",
+          "tenant": "t1",
+          "edge_id": "e3",
+          "clock": 9
+        },
+        {
+          "op": "check_session",
+          "request_id": "r13",
+          "tenant": "t1",
+          "session_id": "S-r9",
+          "clock": 10
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r14",
+          "tenant": "t1",
+          "identity": "c1",
+          "clock": 10
+        }
+      ]
+    },
+    {
+      "name": "bridge-revoke-splits",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t1",
+          "identity": "c1",
+          "provider": "provC",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r4",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "b1",
+          "b": "c1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provB|b1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provC|c1|1|100",
+          "valid_from": 2,
+          "valid_until": 100,
+          "clock": 3
+        },
+        {
+          "op": "login",
+          "request_id": "r6",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1",
+            "c1"
+          ],
+          "clock": 4
+        },
+        {
+          "op": "revoke",
+          "request_id": "r7",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "clock": 5
+        },
+        {
+          "op": "check_session",
+          "request_id": "r8",
+          "tenant": "t1",
+          "session_id": "S-r6",
+          "clock": 6
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r9",
+          "tenant": "t1",
+          "identity": "a1",
+          "clock": 6
+        }
+      ]
+    },
+    {
+      "name": "expiry-vs-new-session",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r3",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|10",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|10",
+          "valid_from": 1,
+          "valid_until": 10,
+          "clock": 5
+        },
+        {
+          "op": "login",
+          "request_id": "r4",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 9
+        },
+        {
+          "op": "check_session",
+          "request_id": "r5",
+          "tenant": "t1",
+          "session_id": "S-r4",
+          "clock": 10
+        },
+        {
+          "op": "login",
+          "request_id": "r6",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 10
+        },
+        {
+          "op": "associate",
+          "request_id": "r7",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provA|a1|1|20",
+          "confirm_b": "MOCKCONF|t1|e2|provB|b1|1|20",
+          "valid_from": 11,
+          "valid_until": 20,
+          "clock": 11
+        },
+        {
+          "op": "check_session",
+          "request_id": "r8",
+          "tenant": "t1",
+          "session_id": "S-r4",
+          "clock": 12
+        },
+        {
+          "op": "login",
+          "request_id": "r9",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 12
+        },
+        {
+          "op": "check_session",
+          "request_id": "r10",
+          "tenant": "t1",
+          "session_id": "S-r9",
+          "clock": 13
+        }
+      ]
+    },
+    {
+      "name": "renewals-and-replay",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r3",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|10",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|10",
+          "valid_from": 1,
+          "valid_until": 10,
+          "clock": 2
+        },
+        {
+          "op": "login",
+          "request_id": "r4",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 3
+        },
+        {
+          "op": "renew_identity",
+          "request_id": "r5",
+          "tenant": "t1",
+          "identity": "a1",
+          "clock": 4
+        },
+        {
+          "op": "check_session",
+          "request_id": "r6",
+          "tenant": "t1",
+          "session_id": "S-r4",
+          "clock": 5
+        },
+        {
+          "op": "renew_edge",
+          "request_id": "r7",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "gen_a": 2,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|2|50",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|50",
+          "valid_from": 5,
+          "valid_until": 50,
+          "clock": 5
+        },
+        {
+          "op": "login",
+          "request_id": "r8",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 6
+        },
+        {
+          "op": "renew_edge",
+          "request_id": "r7",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "gen_a": 2,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|2|50",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|50",
+          "valid_from": 5,
+          "valid_until": 50,
+          "clock": 7
+        },
+        {
+          "op": "check_session",
+          "request_id": "r9",
+          "tenant": "t1",
+          "session_id": "S-r8",
+          "clock": 8
+        }
+      ]
+    },
+    {
+      "name": "duplicate-request-replay",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r3",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "revoke",
+          "request_id": "r4",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "clock": 3
+        },
+        {
+          "op": "associate",
+          "request_id": "r3",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 4
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r5",
+          "tenant": "t1",
+          "identity": "a1",
+          "clock": 4
+        },
+        {
+          "op": "associate",
+          "request_id": "r6",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 4,
+          "valid_until": 100,
+          "clock": 5
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r7",
+          "tenant": "t1",
+          "identity": "a1",
+          "clock": 6
+        }
+      ]
+    },
+    {
+      "name": "tenant-isolation",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t2",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r4",
+          "tenant": "t2",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r6",
+          "tenant": "t2",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t2|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t2|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "login",
+          "request_id": "r7",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 3
+        },
+        {
+          "op": "login",
+          "request_id": "r8",
+          "tenant": "t2",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 3
+        },
+        {
+          "op": "revoke",
+          "request_id": "r9",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "clock": 4
+        },
+        {
+          "op": "check_session",
+          "request_id": "r10",
+          "tenant": "t1",
+          "session_id": "S-r7",
+          "clock": 5
+        },
+        {
+          "op": "check_session",
+          "request_id": "r11",
+          "tenant": "t2",
+          "session_id": "S-r8",
+          "clock": 5
+        },
+        {
+          "op": "get_principal",
+          "request_id": "r12",
+          "tenant": "t2",
+          "identity": "a1",
+          "clock": 5
+        }
+      ]
+    },
+    {
+      "name": "old-generation-never-revives",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r3",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "login",
+          "request_id": "r4",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 3
+        },
+        {
+          "op": "revoke",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "clock": 4
+        },
+        {
+          "op": "associate",
+          "request_id": "r6",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provB|b1|1|100",
+          "valid_from": 5,
+          "valid_until": 100,
+          "clock": 5
+        },
+        {
+          "op": "check_session",
+          "request_id": "r7",
+          "tenant": "t1",
+          "session_id": "S-r4",
+          "clock": 6
+        },
+        {
+          "op": "login",
+          "request_id": "r8",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 6
+        },
+        {
+          "op": "check_session",
+          "request_id": "r9",
+          "tenant": "t1",
+          "session_id": "S-r8",
+          "clock": 7
+        }
+      ]
+    },
+    {
+      "name": "merge-two-components",
+      "ops": [
+        {
+          "op": "create_identity",
+          "request_id": "r1",
+          "tenant": "t1",
+          "identity": "a1",
+          "provider": "provA",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r2",
+          "tenant": "t1",
+          "identity": "b1",
+          "provider": "provB",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r3",
+          "tenant": "t1",
+          "identity": "c1",
+          "provider": "provC",
+          "clock": 1
+        },
+        {
+          "op": "create_identity",
+          "request_id": "r4",
+          "tenant": "t1",
+          "identity": "d1",
+          "provider": "provD",
+          "clock": 1
+        },
+        {
+          "op": "associate",
+          "request_id": "r5",
+          "tenant": "t1",
+          "edge_id": "e1",
+          "a": "a1",
+          "b": "b1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e1|provA|a1|1|100",
+          "confirm_b": "MOCKCONF|t1|e1|provB|b1|1|100",
+          "valid_from": 1,
+          "valid_until": 100,
+          "clock": 2
+        },
+        {
+          "op": "associate",
+          "request_id": "r6",
+          "tenant": "t1",
+          "edge_id": "e2",
+          "a": "c1",
+          "b": "d1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e2|provC|c1|1|100",
+          "confirm_b": "MOCKCONF|t1|e2|provD|d1|1|100",
+          "valid_from": 2,
+          "valid_until": 100,
+          "clock": 3
+        },
+        {
+          "op": "login",
+          "request_id": "r7",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1"
+          ],
+          "clock": 4
+        },
+        {
+          "op": "login",
+          "request_id": "r8",
+          "tenant": "t1",
+          "identities": [
+            "c1",
+            "d1"
+          ],
+          "clock": 4
+        },
+        {
+          "op": "associate",
+          "request_id": "r9",
+          "tenant": "t1",
+          "edge_id": "e3",
+          "a": "b1",
+          "b": "c1",
+          "gen_a": 1,
+          "gen_b": 1,
+          "confirm_a": "MOCKCONF|t1|e3|provB|b1|1|100",
+          "confirm_b": "MOCKCONF|t1|e3|provC|c1|1|100",
+          "valid_from": 4,
+          "valid_until": 100,
+          "clock": 5
+        },
+        {
+          "op": "check_session",
+          "request_id": "r10",
+          "tenant": "t1",
+          "session_id": "S-r7",
+          "clock": 6
+        },
+        {
+          "op": "check_session",
+          "request_id": "r11",
+          "tenant": "t1",
+          "session_id": "S-r8",
+          "clock": 6
+        },
+        {
+          "op": "login",
+          "request_id": "r12",
+          "tenant": "t1",
+          "identities": [
+            "a1",
+            "b1",
+            "c1",
+            "d1"
+          ],
+          "clock": 6
+        }
+      ]
+    }
+  ]
+}
